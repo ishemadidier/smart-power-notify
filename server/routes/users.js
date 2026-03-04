@@ -9,9 +9,9 @@ router.get('/', authMiddleware.verifyToken, adminMiddleware, userController.getU
 router.get('/stats', authMiddleware.verifyToken, adminMiddleware, userController.getUserStats);
 router.get('/districts', authMiddleware.verifyToken, userController.getDistricts);
 router.get('/sectors', authMiddleware.verifyToken, userController.getSectors);
-router.put('/location', authMiddleware, userController.updateLocation);
 router.get('/:id', authMiddleware.verifyToken, adminMiddleware, userController.getUserById);
 router.put('/:id', authMiddleware.verifyToken, adminMiddleware, userController.updateUser);
 router.delete('/:id', authMiddleware.verifyToken, adminMiddleware, userController.deleteUser);
 
 module.exports = router;
+

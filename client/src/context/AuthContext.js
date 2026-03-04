@@ -37,10 +37,10 @@ const getCurrentLocation = () => {
 };
 
 // Function to update user location on server
-const updateUserLocation = async (userId) => {
+const updateUserLocation = async () => {
   try {
     const location = await getCurrentLocation();
-    await usersAPI.updateLocation(userId, location.latitude, location.longitude);
+    await usersAPI.updateLocation(location.latitude, location.longitude);
     console.log('Location updated successfully');
   } catch (error) {
     console.warn('Failed to update location:', error.message);
@@ -74,9 +74,7 @@ export const AuthProvider = ({ children }) => {
       setUser(userData);
       
       // Update location after login (non-blocking)
-      if (userData._id) {
-        updateUserLocation(userData._id);
-      }
+      updateUserLocation();
       
       return { success: true };
     } catch (error) {
@@ -99,9 +97,7 @@ export const AuthProvider = ({ children }) => {
       setUser(newUser);
       
       // Update location after registration (non-blocking)
-      if (newUser._id) {
-        updateUserLocation(newUser._id);
-      }
+      updateUserLocation();
       
       return { success: true };
     } catch (error) {

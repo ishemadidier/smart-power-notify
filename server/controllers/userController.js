@@ -160,7 +160,8 @@ exports.getSectors = async (req, res) => {
 // Update user location (for tracking current device location)
 exports.updateLocation = async (req, res) => {
   try {
-    const { id } = req.params;
+    // Users update their own location
+    const userId = req.user.id;
     const { latitude, longitude } = req.body;
 
     if (latitude === undefined || longitude === undefined) {
@@ -168,7 +169,7 @@ exports.updateLocation = async (req, res) => {
     }
 
     const user = await User.findByIdAndUpdate(
-      id,
+      userId,
       { 
         currentLocation: {
           latitude,

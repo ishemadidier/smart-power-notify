@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import AreaChart from '../../components/common/AreaChart';
 
 const Analytics = () => {
   const [stats, setStats] = useState({
@@ -120,20 +121,11 @@ const Analytics = () => {
               {loading ? (
                 <div className="h-48 bg-secondary-100 rounded-lg animate-pulse"></div>
               ) : (
-                <div className="space-y-3">
-                  {stats.notifications.notificationsByType?.map((item, index) => (
-                    <div key={index} className="flex items-center gap-3">
-                      <div className="w-24 text-sm text-secondary-600 capitalize">{item._id || 'N/A'}</div>
-                      <div className="flex-1 h-6 bg-secondary-100 rounded-full overflow-hidden">
-                        <div 
-                          className="h-full bg-primary-500 rounded-full"
-                          style={{ width: `${(item.count / stats.notifications.totalNotifications) * 100}%` }}
-                        ></div>
-                      </div>
-                      <div className="w-12 text-sm text-secondary-900 font-medium text-right">{item.count}</div>
-                    </div>
-                  ))}
-                </div>
+                <AreaChart 
+                  data={stats.notifications.notificationsByType} 
+                  color="#3B82F6" 
+                  height={200}
+                />
               )}
             </div>
 
@@ -143,20 +135,11 @@ const Analytics = () => {
               {loading ? (
                 <div className="h-48 bg-secondary-100 rounded-lg animate-pulse"></div>
               ) : (
-                <div className="space-y-3">
-                  {stats.reports.reportsByType?.map((item, index) => (
-                    <div key={index} className="flex items-center gap-3">
-                      <div className="w-24 text-sm text-secondary-600 capitalize">{item._id || 'N/A'}</div>
-                      <div className="flex-1 h-6 bg-secondary-100 rounded-full overflow-hidden">
-                        <div 
-                          className="h-full bg-accent rounded-full"
-                          style={{ width: `${(item.count / stats.reports.totalReports) * 100}%` }}
-                        ></div>
-                      </div>
-                      <div className="w-12 text-sm text-secondary-900 font-medium text-right">{item.count}</div>
-                    </div>
-                  ))}
-                </div>
+                <AreaChart 
+                  data={stats.reports.reportsByType} 
+                  color="#F59E0B" 
+                  height={200}
+                />
               )}
             </div>
 

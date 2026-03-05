@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import ThemeToggle from '../../components/common/ThemeToggle';
 import { notificationsAPI, reportsAPI } from '../../services/api';
 
 const UserDashboard = () => {
@@ -54,9 +55,9 @@ const UserDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-secondary-50">
+    <div className="min-h-screen bg-secondary-50 dark:bg-dark-bg">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b border-secondary-200">
+      <header className="bg-white dark:bg-dark-card shadow-sm border-b border-secondary-200 dark:border-dark-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-3">
@@ -66,19 +67,20 @@ const UserDashboard = () => {
                 </svg>
               </div>
               <div>
-                <h1 className="text-lg font-bold text-secondary-900">Smart Power</h1>
-                <p className="text-xs text-secondary-500">Rwanda Energy Group</p>
+                <h1 className="text-lg font-bold text-secondary-900 dark:text-white">Smart Power</h1>
+                <p className="text-xs text-secondary-500 dark:text-dark-400">Rwanda Energy Group</p>
               </div>
             </div>
             
             <div className="flex items-center gap-4">
+              <ThemeToggle />
               <div className="text-right">
-                <p className="text-sm font-medium text-secondary-900">{user?.name}</p>
-                <p className="text-xs text-secondary-500">{user?.district}, {user?.province}</p>
+                <p className="text-sm font-medium text-secondary-900 dark:text-white">{user?.name}</p>
+                <p className="text-xs text-secondary-500 dark:text-dark-400">{user?.district}, {user?.province}</p>
               </div>
               <button
                 onClick={handleLogout}
-                className="p-2 text-secondary-500 hover:text-secondary-700 hover:bg-secondary-100 rounded-lg transition-colors"
+                className="p-2 text-secondary-500 hover:text-secondary-700 hover:bg-secondary-100 dark:text-dark-400 dark:hover:bg-dark-200 rounded-lg transition-colors"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />

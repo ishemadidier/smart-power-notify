@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import AreaChart from '../../components/common/AreaChart';
+import BarChart from '../../components/common/BarChart';
+import PieChart from '../../components/common/PieChart';
 
 const Analytics = () => {
   const [stats, setStats] = useState({
@@ -112,85 +115,90 @@ const Analytics = () => {
             <StatCard title="Resolved Reports" value={stats.reports.resolvedReports} icon="✅" color="bg-green-100" />
           </div>
 
-          {/* Charts Placeholder */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Notifications by Type */}
+          {/* Charts Section with Graphical Representation */}
+          <h2 className="text-lg font-semibold text-secondary-900 mb-4">Analytics Charts</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            {/* Notifications by Type - Bar Chart */}
             <div className="bg-white rounded-xl shadow-sm border border-secondary-200 p-6">
               <h3 className="text-lg font-semibold text-secondary-900 mb-4">Notifications by Type</h3>
               {loading ? (
-                <div className="h-48 bg-secondary-100 rounded-lg animate-pulse"></div>
+                <div className="h-64 bg-secondary-100 rounded-lg animate-pulse"></div>
               ) : (
-                <div className="space-y-3">
-                  {stats.notifications.notificationsByType?.map((item, index) => (
-                    <div key={index} className="flex items-center gap-3">
-                      <div className="w-24 text-sm text-secondary-600 capitalize">{item._id || 'N/A'}</div>
-                      <div className="flex-1 h-6 bg-secondary-100 rounded-full overflow-hidden">
-                        <div 
-                          className="h-full bg-primary-500 rounded-full"
-                          style={{ width: `${(item.count / stats.notifications.totalNotifications) * 100}%` }}
-                        ></div>
-                      </div>
-                      <div className="w-12 text-sm text-secondary-900 font-medium text-right">{item.count}</div>
-                    </div>
-                  ))}
-                </div>
+                <BarChart 
+                  data={stats.notifications.notificationsByType} 
+                  color="#3B82F6" 
+                  height={220}
+                />
               )}
             </div>
 
-            {/* Reports by Type */}
+            {/* Reports by Type - Bar Chart */}
             <div className="bg-white rounded-xl shadow-sm border border-secondary-200 p-6">
               <h3 className="text-lg font-semibold text-secondary-900 mb-4">Reports by Type</h3>
               {loading ? (
-                <div className="h-48 bg-secondary-100 rounded-lg animate-pulse"></div>
+                <div className="h-64 bg-secondary-100 rounded-lg animate-pulse"></div>
               ) : (
-                <div className="space-y-3">
-                  {stats.reports.reportsByType?.map((item, index) => (
-                    <div key={index} className="flex items-center gap-3">
-                      <div className="w-24 text-sm text-secondary-600 capitalize">{item._id || 'N/A'}</div>
-                      <div className="flex-1 h-6 bg-secondary-100 rounded-full overflow-hidden">
-                        <div 
-                          className="h-full bg-accent rounded-full"
-                          style={{ width: `${(item.count / stats.reports.totalReports) * 100}%` }}
-                        ></div>
-                      </div>
-                      <div className="w-12 text-sm text-secondary-900 font-medium text-right">{item.count}</div>
-                    </div>
-                  ))}
-                </div>
+                <BarChart 
+                  data={stats.reports.reportsByType} 
+                  color="#F59E0B" 
+                  height={220}
+                />
               )}
             </div>
 
-            {/* Top Districts for Notifications */}
+            {/* Notifications by District - Pie Chart */}
             <div className="bg-white rounded-xl shadow-sm border border-secondary-200 p-6">
               <h3 className="text-lg font-semibold text-secondary-900 mb-4">Top Districts (Notifications)</h3>
               {loading ? (
-                <div className="h-48 bg-secondary-100 rounded-lg animate-pulse"></div>
+                <div className="h-64 bg-secondary-100 rounded-lg animate-pulse"></div>
               ) : (
-                <div className="space-y-2">
-                  {stats.notifications.notificationsByDistrict?.slice(0, 5).map((item, index) => (
-                    <div key={index} className="flex items-center justify-between p-2 bg-secondary-50 rounded-lg">
-                      <span className="text-secondary-700">{item._id || 'N/A'}</span>
-                      <span className="font-semibold text-primary-600">{item.count}</span>
-                    </div>
-                  ))}
-                </div>
+                <PieChart 
+                  data={stats.notifications.notificationsByDistrict?.slice(0, 6) || []}
+                  size={180}
+                />
               )}
             </div>
 
-            {/* Top Districts for Reports */}
+            {/* Reports by District - Pie Chart */}
             <div className="bg-white rounded-xl shadow-sm border border-secondary-200 p-6">
               <h3 className="text-lg font-semibold text-secondary-900 mb-4">Top Districts (Reports)</h3>
               {loading ? (
+                <div className="h-64 bg-secondary-100 rounded-lg animate-pulse"></div>
+              ) : (
+                <PieChart 
+                  data={stats.reports.reportsByDistrict?.slice(0, 6) || []}
+                  size={180}
+                />
+              )}
+            </div>
+          </div>
+
+          {/* Users by Province - Area Chart */}
+          <h2 className="text-lg font-semibold text-secondary-900 mb-4">Users Distribution</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="bg-white rounded-xl shadow-sm border border-secondary-200 p-6">
+              <h3 className="text-lg font-semibold text-secondary-900 mb-4">Users by Province</h3>
+              {loading ? (
                 <div className="h-48 bg-secondary-100 rounded-lg animate-pulse"></div>
               ) : (
-                <div className="space-y-2">
-                  {stats.reports.reportsByDistrict?.slice(0, 5).map((item, index) => (
-                    <div key={index} className="flex items-center justify-between p-2 bg-secondary-50 rounded-lg">
-                      <span className="text-secondary-700">{item._id || 'N/A'}</span>
-                      <span className="font-semibold text-accent">{item.count}</span>
-                    </div>
-                  ))}
-                </div>
+                <AreaChart 
+                  data={stats.users.usersByProvince} 
+                  color="#10B981" 
+                  height={200}
+                />
+              )}
+            </div>
+
+            <div className="bg-white rounded-xl shadow-sm border border-secondary-200 p-6">
+              <h3 className="text-lg font-semibold text-secondary-900 mb-4">Users by District</h3>
+              {loading ? (
+                <div className="h-48 bg-secondary-100 rounded-lg animate-pulse"></div>
+              ) : (
+                <BarChart 
+                  data={stats.users.usersByDistrict?.slice(0, 8) || []} 
+                  color="#8B5CF6" 
+                  height={200}
+                />
               )}
             </div>
           </div>

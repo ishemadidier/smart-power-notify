@@ -1,9 +1,10 @@
-    /** @type {import('tailwindcss').Config} */
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
     "./public/index.html"
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -40,6 +41,17 @@ module.exports = {
           400: '#FBBF24',
           500: '#F59E0B',
           600: '#D97706',
+        },
+        dark: {
+          50: '#1E293B',
+          100: '#0F172A',
+          200: '#334155',
+          300: '#475569',
+          400: '#64748B',
+          500: '#94A3B8',
+          bg: '#0F172A',
+          card: '#1E293B',
+          border: '#334155',
         }
       },
       fontFamily: {
@@ -53,3 +65,4 @@ module.exports = {
   },
   plugins: [],
 }
+
